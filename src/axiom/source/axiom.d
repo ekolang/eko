@@ -51,6 +51,7 @@ public void interp(Node[] nodes, int mode)
 			} else if (key.type == "float" && key.oprator == 1)
 			{
 				floatmap[key.name] = to!float(key.value);
+				//writeln(floatmap);
 			} else if (key.type == "double" && key.oprator == 1)
 			{
 				doublemap[key.name] = to!double(key.value);

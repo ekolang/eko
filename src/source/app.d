@@ -12,6 +12,8 @@ import handy_httpd.handlers.file_resolving_handler;
 import ekoc.ekomain;
 int oa = 0;
 string aj;
+//import argparse;
+string eko_ver = "0.0.4";
 void prHelpMenu()
 {
 	writeln("\033[1mEko (V0.0.4) https://github.com/ekolang/eko");
@@ -20,14 +22,14 @@ void prHelpMenu()
 		writeln("	-ge| --generate-exe: Generate an executable binary as a standalone application.");
 		writeln("	-n | --normal: Run the interpreter in normal mode (without interpretation messages)");
 		writeln("	-d | --debug: Run the interpreter in debug mode and display messages during the interpretation process.");
-		writeln("	-x | --xdoc: Offline Documents in localhost.");
-		writeln("	-v | --version: show version of EkoInterperter.");
-		writeln("	-h | --help: show current menu.");
-		writeln("	-spe | --sboxprinterror: Show errors of SboX.");
+		//writeln("	-x | --xdoc: Offline Documents in localhost.");
+		//writeln("	-v | --version: show version of EkoInterperter.");
+		//writeln("	-h | --help: show current menu.");
+		 writeln("	-spe | --sboxprinterror: Show errors of SboX.");
 		writeln("	-adebug | --asm-debug: Print result of EkoC to NASM.");
 		writeln("	-cdebug | --csc-debug: Printf Eko to EkoC result.");
 		writeln("	-td | --term-debugger: run terminal-based Debugger.");
-		writeln("	-ast | --abstract-syntax-tree: Use AST to run your program. (BETA) (More info: https://github.com/anhumandv/eko/ast/)");
+		writeln("	-ast | --abstract-syntax-tree: Use AST to run your program. (BETA)");
 		writeln("Versions:");
 		writeln("	marschiert(runtime librray): " ~ _version);
 		writeln("	Eko: 0.0.4");
@@ -35,6 +37,29 @@ void prHelpMenu()
 }
 void main(string[] args)
 {
+	/*
+	auto argm = new ArgumentParser();
+	argm.addArgument(
+		["-ge", "--generate-exe"],
+		"Generate an executable binary as a standalone application.",
+		infs(args[2], "cc", "ll", 0)
+	);
+	argm.addArgument(
+		["-e", "--enter"],
+		"run interperter for an eko program",
+		infs(args[2], "normal", "ll", 0)
+	);
+	argm.addArgument(
+		["-v", "--version"],
+		"Show version of Eko",
+		writeln("\033[1mEko " ~ eko_ver ~" " ~ __DATE__ ~ " " ~ __TIME__)
+	);
+	argm.addArgument(
+		["-ast", "--abstract-syntax-tree"],
+		"Use AST to run your program. (BETA)",
+		astSupportRun(args[2])
+	);
+	*/
 	if (args.length < 2){
 		prHelpMenu();
         //prinPanic("WUT");
@@ -52,7 +77,7 @@ void main(string[] args)
 				if (args[1] == "-ge" || args[1] == "--generate-exe"){
 					infs(args[2], "cc", "ll", 0);
 				} else {
-					if (args.length > 4 && args[4] == "--print:ast") infs(args[2], "normal", "ll", 1); //fixed for bug/C002
+					if (args.length > 3 && args[3] == "--print:ast") infs(args[2], "normal", "ll", 1); //fixed for bug/C002
             		else infs(args[2], "normal", "ll", 0);
 				}
 			}
@@ -84,7 +109,8 @@ void main(string[] args)
 		new HttpServer().start();
 	} else if (args[1] == "-ast" || args[1] == "--abstract-syntax-tree")
 	{
-		astSupportRun(args[2]);
+		if(args.length > 3 && args[3] == "--print:ast") astSupportRun(args[2], 1);
+		else astSupportRun(args[2], 0);
 	} else if(args[1] == "--enable-test:ekoc")
 			{
 				auto jaa = readText(args[2]);

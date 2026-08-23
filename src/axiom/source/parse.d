@@ -14,7 +14,7 @@ Tokens[] parser(string lineo)
 		if (tok == "generate" || tok == "gen")
 		{
 			result ~= Tokens(Token.KeyWord, tok);
-		} else if (tok == "string" || tok == "int")
+		} else if (tok == "string" || tok == "int" || tok == "float" || tok == "long" || tok == "short" || tok == "double")
 		{
 			result ~= Tokens(Token.Type, tok);
 		} else if (tok.startsWith("--value") || tok.startsWith("-v"))

@@ -11,10 +11,6 @@
 		"axiom"
 	],
 	"description": "A minimal D application.",
-	"importPaths": [
-        	"source/",
-        	"axiom/source/"
-	],
 	"dependencies": {
 		"handy-httpd": "~>8.7.0",
 		"marschiert": {
@@ -23,5 +19,9 @@
 		"axiom": {
 			"path": "./axiom/"
 		}
-	}
+	},
+	"importPaths": [
+		"source/",
+		"axiom/source/"
+	]
 }

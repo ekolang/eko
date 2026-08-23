@@ -2,6 +2,7 @@
 	"fileVersion": 1,
 	"versions": {
 		"arsd-official": "10.7.0",
+		"axiom": {"path":"axiom/"},
 		"bindbc-common": "1.0.5",
 		"bindbc-loader": "1.1.5",
 		"bindbc-sdl": "1.5.3",
