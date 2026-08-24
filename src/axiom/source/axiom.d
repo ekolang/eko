@@ -33,6 +33,7 @@ void main(string[] args)
 module axiom;
 import std.stdio, std.file, std.algorithm, std.string, std.conv;
 public import structer, parse, lex, ast, tokena, ttoken;
+import cbased;
 string[string] map_str;
 string[string] func_table; 
 public void interp(Node[] nodes, int mode)
@@ -100,7 +101,10 @@ public void interp(Node[] nodes, int mode)
 				}
 			}
 		} else if (auto key = cast(DefineKeyWordFunc)io ){
-			if (mode == 1) writeln(key);
+			writeln(key);
+			{
+				writeln(key.type);
+			}
 			if (key.type == "string" && key.oprator == 1)
 			{
 				if (mode) writeln("Relized as string and = oprator equal statement.");
@@ -136,6 +140,27 @@ public void interp(Node[] nodes, int mode)
 						} else writeln("Axiom: file dosent exists.");
 					}
 				}
+			} else if (key.type == "double"){
+				if (key.func.name == "acos")
+				{
+					double ka = to!double(key.func.arguments);
+					doublemap[key.name] = _acos(ka);
+					writeln(key.name);
+					writeln(doublemap[key.name]);
+					if (doublemap[key.name] == 0.0)
+					{
+						writeln("Core fault: `acos` value must satisfy the following rules [value =< 1, value >= -1]");
+						_abort();
+					}
+				} else if(key.func.name == "asin"){
+					double ka = to!double(key.func.arguments);
+					doublemap[key.name] = _asin(ka);
+					if (doublemap[key.name] == 0.0)
+					{
+						writeln("Core fault: `acos` value must satisfy the following rules [value =< 1, value >= -1]");
+						_abort();
+					}
+				} 
 			}
 		}
 	}

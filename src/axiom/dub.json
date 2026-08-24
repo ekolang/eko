@@ -6,5 +6,6 @@
 	],
 	"copyright": "Copyright © 2026, Pouya Mohammadi",
 	"name": "axiom",
-	"targetType": "library"
+	"targetType": "library",
+	    "libs": ["cbased"]
 }
