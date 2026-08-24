@@ -1,0 +1,6 @@
+pouya@pouya-latitude-e5440:~/ZugC/src$ ./eko -e test.eko -n
+core.exception.ArrayIndexError@source/app.d(55): index [4] is out of bounds for array of length 4
+----------------
+??:? onArrayIndexError [0x556eb349cc36]
+??:? _d_arraybounds_indexp [0x556eb3450457]
+source/app.d:55 _Dmain [0x556eb3279786]

@@ -1,0 +1,7 @@
+generate Printer() {
+	write("Hello");
+}
+
+generate main() {
+	Printer();
+}

@@ -1,0 +1,23 @@
+C:\Users\NIMA\AppData\Local\Temporary Projects\EkoIDE\bin\Debug\EkoIDE.exe
+C:\Users\NIMA\AppData\Local\Temporary Projects\EkoIDE\bin\Debug\EkoIDE.pdb
+C:\Users\NIMA\AppData\Local\Temporary Projects\EkoIDE\obj\x86\Debug\EkoIDE.Form1.resources
+C:\Users\NIMA\AppData\Local\Temporary Projects\EkoIDE\obj\x86\Debug\EkoIDE.Properties.Resources.resources
+C:\Users\NIMA\AppData\Local\Temporary Projects\EkoIDE\obj\x86\Debug\EkoIDE.csproj.GenerateResource.Cache
+C:\Users\NIMA\AppData\Local\Temporary Projects\EkoIDE\obj\x86\Debug\EkoIDE.exe
+C:\Users\NIMA\AppData\Local\Temporary Projects\EkoIDE\obj\x86\Debug\EkoIDE.pdb
+C:\Users\NIMA\AppData\Local\Temporary Projects\EkoIDE\obj\x86\Debug\EkoIDE.AboutBox1.resources
+C:\Users\NIMA\AppData\Local\Temporary Projects\EkoIDE\obj\x86\Debug\EkoIDE.Form2.resources
+C:\Users\NIMA\Documents\Visual Studio 2010\Projects\EkoIDE\EkoIDE\obj\x86\Debug\EkoIDE.exe
+C:\Users\NIMA\Documents\Visual Studio 2010\Projects\EkoIDE\EkoIDE\obj\x86\Debug\EkoIDE.AboutBox1.resources
+C:\Users\NIMA\Documents\Visual Studio 2010\Projects\EkoIDE\EkoIDE\obj\x86\Debug\EkoIDE.Form1.resources
+C:\Users\NIMA\Documents\Visual Studio 2010\Projects\EkoIDE\EkoIDE\obj\x86\Debug\EkoIDE.Form2.resources
+C:\Users\NIMA\Documents\Visual Studio 2010\Projects\EkoIDE\EkoIDE\obj\x86\Debug\EkoIDE.Properties.Resources.resources
+C:\Users\NIMA\Documents\Visual Studio 2010\Projects\EkoIDE\EkoIDE\obj\x86\Debug\EkoIDE.csproj.GenerateResource.Cache
+C:\Users\NIMA\Documents\Visual Studio 2010\Projects\EkoIDE\EkoIDE\bin\Debug\EkoIDE.exe
+C:\Users\NIMA\Documents\Visual Studio 2010\Projects\EkoIDE\EkoIDE\bin\Debug\EkoIDE.pdb
+C:\Users\NIMA\Documents\Visual Studio 2010\Projects\EkoIDE\EkoIDE\obj\x86\Debug\EkoIDE.pdb
+C:\Users\NIMA\Documents\Visual Studio 2010\Projects\EkoIDE\EkoIDE\obj\x86\Debug\EkoIDE.AboutBox2.resources
+C:\Users\NIMA\Documents\Visual Studio 2010\Projects\EkoIDE\EkoIDE\obj\x86\Debug\EkoIDE.csprojResolveAssemblyReference.cache
+C:\Users\NIMA\Documents\Visual Studio 2010\Projects\EkoIDE\EkoIDE\bin\Debug\Ionic.Zip.dll
+C:\Users\NIMA\documents\visual studio 2010\Projects\EkoIDE\EkoIDE\obj\x86\Debug\EkoIDE.AboutBox3.resources
+C:\Users\NIMA\documents\visual studio 2010\Projects\EkoIDE\EkoIDE\obj\x86\Debug\EkoIDE.Form3.resources

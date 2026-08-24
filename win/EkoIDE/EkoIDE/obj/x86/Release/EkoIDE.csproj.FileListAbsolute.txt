@@ -1,0 +1,12 @@
+C:\Users\NIMA\documents\visual studio 2010\Projects\EkoIDE\EkoIDE\bin\Release\EkoIDE.exe
+C:\Users\NIMA\documents\visual studio 2010\Projects\EkoIDE\EkoIDE\bin\Release\EkoIDE.pdb
+C:\Users\NIMA\documents\visual studio 2010\Projects\EkoIDE\EkoIDE\bin\Release\Ionic.Zip.dll
+C:\Users\NIMA\documents\visual studio 2010\Projects\EkoIDE\EkoIDE\obj\x86\Release\EkoIDE.csprojResolveAssemblyReference.cache
+C:\Users\NIMA\documents\visual studio 2010\Projects\EkoIDE\EkoIDE\obj\x86\Release\EkoIDE.AboutBox1.resources
+C:\Users\NIMA\documents\visual studio 2010\Projects\EkoIDE\EkoIDE\obj\x86\Release\EkoIDE.AboutBox2.resources
+C:\Users\NIMA\documents\visual studio 2010\Projects\EkoIDE\EkoIDE\obj\x86\Release\EkoIDE.Form1.resources
+C:\Users\NIMA\documents\visual studio 2010\Projects\EkoIDE\EkoIDE\obj\x86\Release\EkoIDE.Form2.resources
+C:\Users\NIMA\documents\visual studio 2010\Projects\EkoIDE\EkoIDE\obj\x86\Release\EkoIDE.Properties.Resources.resources
+C:\Users\NIMA\documents\visual studio 2010\Projects\EkoIDE\EkoIDE\obj\x86\Release\EkoIDE.csproj.GenerateResource.Cache
+C:\Users\NIMA\documents\visual studio 2010\Projects\EkoIDE\EkoIDE\obj\x86\Release\EkoIDE.exe
+C:\Users\NIMA\documents\visual studio 2010\Projects\EkoIDE\EkoIDE\obj\x86\Release\EkoIDE.pdb

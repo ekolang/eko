@@ -1,0 +1,18 @@
+generate int -v:count = 0
+
+generate print() {
+	-v:count = -v:count++
+	write(-v:count + "\n");
+	test();
+}
+
+generate test() {
+	if (-v:count > 11):
+		write("Job is Done");
+		end;
+	else: print();
+}
+
+generate main() {
+	test();
+}

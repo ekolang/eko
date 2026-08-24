@@ -1,0 +1,17 @@
+{
+	"fileVersion": 1,
+	"versions": {
+		"arsd-official": "10.7.0",
+		"bindbc-common": "1.0.5",
+		"bindbc-loader": "1.1.5",
+		"bindbc-sdl": "1.5.3",
+		"dgfx": "1.3.6",
+		"dsdl": "1.0.0",
+		"handy-httpd": "8.7.0",
+		"httparsed": "1.2.2",
+		"marschiert": {"path":"runtime/"},
+		"path-matcher": "1.2.0",
+		"slf4d": "4.2.0",
+		"streams": "3.6.0"
+	}
+}

@@ -1,0 +1,7 @@
+generate char -v:content[] = getInput().chomp
+
+generate main() {
+    if (strcmp("ekolang", -v:content)):
+        write("Hello ekolang!\n");
+        end;
+}

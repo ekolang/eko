@@ -1,0 +1,4 @@
+#BOX {
+	gen string -v:la = "Hello" // you can use it in out of BOX
+	write("Hello");
+}

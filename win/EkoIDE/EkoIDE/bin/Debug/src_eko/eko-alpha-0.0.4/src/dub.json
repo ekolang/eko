@@ -1,0 +1,27 @@
+{
+	"authors": [
+		"Ekolang",
+		"pouya1dev"
+	],
+	"license": "proprietary",
+	"copyright": "Copyright © 2026, https://github.com/ekolang, https://github.com/pouya1dev",
+	"name": "eko",
+	"libs": [
+		"marschiert",
+		"axiom"
+	],
+	"description": "A minimal D application.",
+	"importPaths": [
+        	"source/",
+        	"axiom/source/"
+	],
+	"dependencies": {
+		"handy-httpd": "~>8.7.0",
+		"marschiert": {
+			"path": "./runtime/"
+		},
+		"axiom": {
+			"path": "./axiom/"
+		}
+	}
+}

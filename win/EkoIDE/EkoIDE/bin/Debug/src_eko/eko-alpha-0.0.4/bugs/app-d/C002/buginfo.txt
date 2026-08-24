@@ -1,0 +1,4 @@
+C002 - figured out at : 10:03 2026 21 aug
+
+at this bug, when you run ./eko -n gfilename -e or ./eko -n filename -d for new updates fo support --enable-test:ekoc its return error.
+

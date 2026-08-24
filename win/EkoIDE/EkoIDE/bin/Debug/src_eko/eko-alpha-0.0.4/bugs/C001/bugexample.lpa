@@ -1,0 +1,12 @@
+// example for C001 Bug
+
+generate string -v:lop[] = readFile()
+generate string -v:readFile.filename = "helloworld.eko"
+
+#BOX write("Hi" + "\n");
+generate header {
+	
+}
+generate main() {
+	write(-v:lop); & write("\n"); & return 0;
+}

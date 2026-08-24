@@ -1,0 +1,6 @@
+generate main() {
+  // s0 is a escape for space
+  // you can remove return if you want normal exit-code.
+  write("Hello" + "\s0" + "World\n");
+  return 0;
+}
