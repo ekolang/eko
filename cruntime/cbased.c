@@ -34,7 +34,7 @@ int _abs(int num)
 
 double _acos(double arg)
 {
-	if (arg <= -1.0 && arg >= 1.0){
+	if (arg >=  -1.0 && arg <= 1.0){
 		return acos(arg);
 	} else {
 		return 0.0;
@@ -42,9 +42,9 @@ double _acos(double arg)
 }
 double _asin(double asina)
 {
-	if (asina <= -1.0)
+	if (asina >= -1.0)
 	{
-		if (asina >= 1.0){
+		if (asina <= 1.0){
 			return asin(asina);
 		} else {
 			return 0.0;
@@ -56,5 +56,5 @@ double _asin(double asina)
 
 double _atan2(double x, double y)
 {
-	return _atan2(x, y);
+	return atan2(x, y);
 }

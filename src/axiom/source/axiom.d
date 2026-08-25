@@ -101,9 +101,9 @@ public void interp(Node[] nodes, int mode)
 				}
 			}
 		} else if (auto key = cast(DefineKeyWordFunc)io ){
-			writeln(key);
+			//writeln(key);
 			{
-				writeln(key.type);
+				//writeln(key.type);
 			}
 			if (key.type == "string" && key.oprator == 1)
 			{
@@ -141,23 +141,25 @@ public void interp(Node[] nodes, int mode)
 					}
 				}
 			} else if (key.type == "double"){
-				if (key.func.name == "acos")
+				//writeln(key.func.name);
+				if (key.func.name == "_acos")
 				{
+					//writeln(_acos(0.5));
 					double ka = to!double(key.func.arguments);
 					doublemap[key.name] = _acos(ka);
-					writeln(key.name);
-					writeln(doublemap[key.name]);
+					//writeln(key.name);
+					//writeln(doublemap[key.name]);
 					if (doublemap[key.name] == 0.0)
 					{
-						writeln("Core fault: `acos` value must satisfy the following rules [value =< 1, value >= -1]");
+						writeln("Core fault: `_acos` value must satisfy the following rules [value =< 1, value >= -1]");
 						_abort();
 					}
-				} else if(key.func.name == "asin"){
+				} else if(key.func.name == "_asin"){
 					double ka = to!double(key.func.arguments);
 					doublemap[key.name] = _asin(ka);
 					if (doublemap[key.name] == 0.0)
 					{
-						writeln("Core fault: `acos` value must satisfy the following rules [value =< 1, value >= -1]");
+						writeln("Core fault: `_asin` value must satisfy the following rules [value =< 1, value >= -1]");
 						_abort();
 					}
 				} 

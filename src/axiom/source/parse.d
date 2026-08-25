@@ -60,6 +60,6 @@ Tokens[] parser(string lineo)
 			} else result ~= Tokens(Token.Value, tok);
 		}
 	}
-	writeln(result);
+	//writeln(result);
 	return result;
 }
