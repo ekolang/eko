@@ -32,7 +32,7 @@ void main(string[] args)
 
 module axiom;
 import std.stdio, std.file, std.algorithm, std.string, std.conv;
-public import structer, parse, lex, ast, tokena, ttoken;
+public import structer, pars, lex, ast, tokena, ttoken;
 import cbased;
 string[string] map_str;
 string[string] func_table; 

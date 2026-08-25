@@ -5,7 +5,7 @@ struct OpratorSt {
 	static int equal = 1;
 }
 
-interface Node {
+public interface Node {
 	//void execute();
 }
 
@@ -74,3 +74,17 @@ class DefineKeyWordFunc : Node {
 	}
 }
 
+
+class IfState : Node {
+	Node left;
+	string opr;
+	Node right;
+	Node boday;
+	this(Node left, string opr, Node right, Node boday)
+	{
+		this.left = left;
+		this.opr = opr;
+		this.right = right;
+		this.boday = boday;
+	}
+}

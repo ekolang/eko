@@ -1,77 +1,93 @@
 module lex;
 import std.stdio;
-import structer, ast;
-
-Node[] Lexer(Tokens[] tokens){
-	Node[] result;
-	if (tokens[0].type == Token.KeyWord)
+import structer;
+import std.regex;
+import std.string, tokena;
+import std.algorithm;
+public string[] inString_Func_support = ["getInput", "readFile"];
+‌Blocktype[] iao;
+Node[] lop;
+Node[] bodyof;
+bool insidef = false;
+Tokens[] lexer(string lineo)
+{
+	bool getarg = false;
+	Tokens[] result;
+	string[] tk = Tokenlz(lineo);
+	foreach (tok; tk)
 	{
-		if (tokens[1].type == Token.Type && tokens[3].type == Token.Oprators && tokens[3].valu == "=")
+		if (tok == "generate" || tok == "gen")
 		{
-			if (tokens[4].type == Token.Func)
-			{
-				bool inPa = false;
-				string argsr = "";
-				string funcnam = "";
-				//writeln(tokens[4].valu);
-				foreach(char i; tokens[4].valu){
-					if (i == '(')
-					{
-						inPa = true;
-						continue;
-					} else if (i == ')')
-					{
-						inPa = false;
-						continue;
-					} else if (i == ';')
-					{
-						break;
-					} else if (inPa == true)
-					{
-						argsr ~= i;
-						continue;
-					} else {
-						funcnam ~= i;
-						continue;
-					}
-				}
-				result ~= new DefineKeyWordFunc(tokens[0].valu, tokens[1].valu, tokens[2].valu, 1, new FuncCall(funcnam, argsr));
-			} else {
-				result ~= new DefineKeyWord(tokens[0].valu, tokens[1].valu, tokens[2].valu, 1, tokens[4].valu);
-			}
-		} 
-	} else if (tokens[0].type == Token.Func)
+			result ~= Tokens(Token.KeyWord, tok);
+		} else if (tok == "string" || tok == "int" || tok == "float" || tok == "long" || tok == "short" || tok == "double")
 		{
-			bool inp = false;
-			string funname = "";
-			string args = "";
-			foreach(char c; tokens[0].valu)
+			result ~= Tokens(Token.Type, tok);
+		} else if (tok.startsWith("--value") || tok.startsWith("-v"))
+		{
+			result ~= Tokens(Token.Name, tok);
+		} else if (tok == "=" || tok == "==" || tok == ">" || tok == "<")
+		{
+			result ~= Tokens(Token.Oprators, tok);
+		} else if (tok.startsWith("_") && tok.endsWith(");"))
+		{
+			result ~= Tokens(Token.Func, tok);
+		} else if (tok == "if"){
+			result ~= Tokens(Token.BrNeedFunc, tok);
+			getarg = true;
+		} else if (getarg == true && tok.startsWith("(") && tok.endsWith("):")){
+			auto tok2 = tok.replace("(", "");
+			tok2 = tok2.replace(")", "");
+			Tokens[] tok1 = lexer(tok2);
+			lop ~= parser(tok1);
+			//iao ~= Blocktype(lop);
+			insidef = true;
+			continue;
+		} else {
+			bool inP = false;
+			string funcna = "";
+			foreach (char i; tok)
 			{
-				if (c == '(')
+				if (i == '(')
 				{
-					inp = true;
+					inP = true;
 					continue;
-				} else if (c == ')')
-				{
-					inp = false;
+				} else if (i == ')') {
+					inP = false;
+					break;
+				} else if (inP == true){
 					continue;
-				} else if (c == ';')
-				{
-					continue;
-				} else if (c == '_')
-				{
-					continue;
-				} else if (inp == false)
-				{
-					funname ~= c;
-				} else if (inp == true)
-				{
-					args ~= c;
+				} else {	
+					funcna ~= i;
 				}
 			}
-
-			result ~= new FuncCall(funname, args);
+			//writeln("====:" ~ funcna);
+			bool inforeach = false;
+			foreach (value; inString_Func_support)
+			{
+				if (funcna == value)
+				{
+					inforeach = true;
+					break;
+				}
+			}
+			if (inforeach)
+			{
+				result ~= Tokens(Token.Func, tok);
+			} else result ~= Tokens(Token.Value, tok);
 		}
-
+		if (insidef && tok != "end;")
+		{
+			bodyof ~= result;
+			continue;
+		} else {
+			if (tok == "end;")
+			{
+				insidef = false;
+				iao ~= Blocktype(lop, bodyof);
+				continue;
+			}
+		}
+	}
+	//writeln(result);
 	return result;
 }

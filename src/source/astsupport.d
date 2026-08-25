@@ -11,12 +11,12 @@ void astSupportRun(string filepath, int mode)
         auto fileline = readText(filepath).splitLines();
         foreach(li; fileline)
         {
-            Tokens[] tokenlist = parser(li);
+            Tokens[] tokenlist = lexer(li);
 			//writeln(tokenlist);
-			Node[] lexer_result = Lexer(tokenlist);
+			Node[] parser_result = parser(tokenlist);
 			//writeln(lexer_result);
-            if (mode == 1) writeln(lexer_result);
-			interp(lexer_result, 0);
+            if (mode == 1) writeln(parser_result);
+			interp(parser_result, 0);
         }
     } else prinPanic(kodes._file_faild, "eko ast-mode");
 }
@@ -24,10 +24,10 @@ void astSupportRun(string filepath, int mode)
 void astSupportLine(string li, int mode)
 {
 
-    Tokens[] tokenlist = parser(li);
+    Tokens[] tokenlist = lexer(li);
 			//writeln(tokenlist);
-	Node[] lexer_result = Lexer(tokenlist);
+	Node[] parser_result = parser(tokenlist);
     if (mode == 1) writeln(lexer_result);
 			//writeln(lexer_result);
-	interp(lexer_result, 0);
+	interp(parser_result, 0);
 }

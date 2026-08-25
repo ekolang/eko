@@ -1,5 +1,5 @@
 module structer;
-
+import lex;
 //tokens
 enum Token {
 	KeyWord,
@@ -7,7 +7,15 @@ enum Token {
 	Name,
 	Type,
 	Oprators,
-	Func
+	Func,
+	BrNeedFunc,
+	Br1,
+	Br2
+}
+struct Blocktype
+{
+	Node args;
+	Node bod;
 }
 struct Tokens {
 	Token type;
