@@ -4,8 +4,9 @@ import structer;
 import std.regex;
 import std.string, tokena;
 import std.algorithm;
+import ast, pars;
 public string[] inString_Func_support = ["getInput", "readFile"];
-‌Blocktype[] iao;
+Blocktype[] iao;
 Node[] lop;
 Node[] bodyof;
 bool insidef = false;
@@ -14,6 +15,7 @@ Tokens[] lexer(string lineo)
 	bool getarg = false;
 	Tokens[] result;
 	string[] tk = Tokenlz(lineo);
+	string res;
 	foreach (tok; tk)
 	{
 		if (tok == "generate" || tok == "gen")
@@ -34,13 +36,19 @@ Tokens[] lexer(string lineo)
 		} else if (tok == "if"){
 			result ~= Tokens(Token.BrNeedFunc, tok);
 			getarg = true;
-		} else if (getarg == true && tok.startsWith("(") && tok.endsWith("):")){
+		} else if (getarg == true && tok.startsWith("(")){
+			res ~= tok;
+			continue;
+		} else if (getarg == true && tok.endsWith("):")){
+			res ~= " " ~ tok;
 			auto tok2 = tok.replace("(", "");
 			tok2 = tok2.replace(")", "");
 			Tokens[] tok1 = lexer(tok2);
 			lop ~= parser(tok1);
 			//iao ~= Blocktype(lop);
 			insidef = true;
+			writeln(lop);
+			writeln(tok);
 			continue;
 		} else {
 			bool inP = false;
@@ -77,7 +85,7 @@ Tokens[] lexer(string lineo)
 		}
 		if (insidef && tok != "end;")
 		{
-			bodyof ~= result;
+			bodyof ~= parser(result);
 			continue;
 		} else {
 			if (tok == "end;")

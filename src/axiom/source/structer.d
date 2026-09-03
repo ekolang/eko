@@ -1,5 +1,5 @@
 module structer;
-import lex;
+import lex, ast;
 //tokens
 enum Token {
 	KeyWord,
@@ -12,10 +12,10 @@ enum Token {
 	Br1,
 	Br2
 }
-struct Blocktype
+public struct Blocktype
 {
-	Node args;
-	Node bod;
+	Node[] args;
+	Node[] bod;
 }
 struct Tokens {
 	Token type;

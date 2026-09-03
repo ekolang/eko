@@ -42,7 +42,7 @@ Node[] parser(Tokens[] tokens){
 		} else if (tokens[0].type == Token.BrNeedFunc){
 			foreach(ol; iao)
 			{
-				//if (ol ) <i must start from here>
+				//s
 			}
 		}
 	} else if (tokens[0].type == Token.Func)
