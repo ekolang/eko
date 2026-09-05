@@ -1,2 +1,3 @@
-gen double -v:ia = _acos(5);
-_write(-v:ia);
+if ():
+    write("Hello");
+    end;

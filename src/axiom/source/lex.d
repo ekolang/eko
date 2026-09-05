@@ -5,17 +5,20 @@ import std.regex;
 import std.string, tokena;
 import std.algorithm;
 import ast, pars;
-public string[] inString_Func_support = ["getInput", "readFile"];
+public string[] funclist = ["getInput", "readFile", "write"];
 Blocktype[] iao;
-Node[] lop;
-Node[] bodyof;
+
 bool insidef = false;
 Tokens[] lexer(string lineo)
 {
+	Node[] lop;
+	Node[] bodyof;
 	bool getarg = false;
 	Tokens[] result;
 	string[] tk = Tokenlz(lineo);
 	string res;
+	bool inf = false;
+	string funcname;
 	foreach (tok; tk)
 	{
 		if (tok == "generate" || tok == "gen")
@@ -30,26 +33,20 @@ Tokens[] lexer(string lineo)
 		} else if (tok == "=" || tok == "==" || tok == ">" || tok == "<")
 		{
 			result ~= Tokens(Token.Oprators, tok);
-		} else if (tok.startsWith("_") && tok.endsWith(");"))
-		{
-			result ~= Tokens(Token.Func, tok);
+		} else if (tok in funclist){
+			inf = true;
+			funcname = tok;
+			continue;
+		} else if (inf){
+			result ~= Tokens(Token.Func, funcname ~ tok);
+			funcname = "";
+			inf = false;
+			continue;
 		} else if (tok == "if"){
-			result ~= Tokens(Token.BrNeedFunc, tok);
 			getarg = true;
-		} else if (getarg == true && tok.startsWith("(")){
-			res ~= tok;
 			continue;
-		} else if (getarg == true && tok.endsWith("):")){
-			res ~= " " ~ tok;
-			auto tok2 = tok.replace("(", "");
-			tok2 = tok2.replace(")", "");
-			Tokens[] tok1 = lexer(tok2);
-			lop ~= parser(tok1);
-			//iao ~= Blocktype(lop);
-			insidef = true;
-			writeln(lop);
-			writeln(tok);
-			continue;
+		} else if (getarg == true && tok.startsWith("(") && tok.endsWith(")")){
+			// i must start from here
 		} else {
 			bool inP = false;
 			string funcna = "";
@@ -92,10 +89,12 @@ Tokens[] lexer(string lineo)
 			{
 				insidef = false;
 				iao ~= Blocktype(lop, bodyof);
+				bodyof = [];
+				lop = [];
 				continue;
 			}
 		}
 	}
-	//writeln(result);
+	
 	return result;
 }

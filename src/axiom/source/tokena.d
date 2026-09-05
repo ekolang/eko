@@ -21,7 +21,10 @@ string[] Tokenlz(string line)
 		{
 			inParan = false;
 			curent ~= a;
-		} else if(a == ' '){
+			result ~= curent;
+			curent = "";
+			continue;
+		} else if(a == ' ' && !inParan){
 			if (inString == true)
 			{
 				curent ~= a;

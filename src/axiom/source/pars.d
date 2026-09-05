@@ -1,10 +1,10 @@
 module pars;
 import std.stdio;
 import structer, ast;
-import lex;
+import lex, axiom;
 Node[] parser(Tokens[] tokens){
 	Node[] result;
-	if (tokens[0].type == Token.KeyWord)
+	if (tokens.length > 0 && tokens[0].type == Token.KeyWord)
 	{
 		if (tokens[1].type == Token.Type && tokens[3].type == Token.Oprators && tokens[3].valu == "=")
 		{
@@ -40,12 +40,9 @@ Node[] parser(Tokens[] tokens){
 				result ~= new DefineKeyWord(tokens[0].valu, tokens[1].valu, tokens[2].valu, 1, tokens[4].valu);
 			}
 		} else if (tokens[0].type == Token.BrNeedFunc){
-			foreach(ol; iao)
-			{
-				//s
-			}
+			//noting
 		}
-	} else if (tokens[0].type == Token.Func)
+	} else if (tokens.length > 0 && tokens[0].type == Token.Func)
 		{
 			bool inp = false;
 			string funname = "";
@@ -75,6 +72,36 @@ Node[] parser(Tokens[] tokens){
 				}
 			}
 
+			result ~= new FuncCall(funname, args);
+		} else if (tokens.length > 0 && tokens[0].type == Token.Value)
+		{
+			bool inp = false;
+			string funname = "";
+			string args = "";
+			foreach(char c; tokens[0].valu)
+			{
+				if (c == '(')
+				{
+					inp = true;
+					continue;
+				} else if (c == ')')
+				{
+					inp = false;
+					continue;
+				} else if (c == ';')
+				{
+					continue;
+				} else if (c == '_')
+				{
+					continue;
+				} else if (inp == false)
+				{
+					funname ~= c;
+				} else if (inp == true)
+				{
+					args ~= c;
+				}
+			}
 			result ~= new FuncCall(funname, args);
 		}
 
