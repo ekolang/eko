@@ -1,0 +1,5 @@
+gen string @pouya _getInput "whats your name?"
+gen double @acos_value _acos 0.5
+_write @pouya
+_write "Hello1"
+_write @acos_value

@@ -12,16 +12,15 @@ enum Token {
 	Br1,
 	Br2
 }
-public struct Blocktype
-{
-	Node[] args;
-	Node[] bod;
-}
 struct Tokens {
 	Token type;
 	string valu;
 }
-
+struct BlockType
+{
+	string funcname;
+	string argumnets;
+}
 public int[string] intmap;
 public float[string] floatmap;
 public bool[string] boolmap;

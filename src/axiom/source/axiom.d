@@ -32,7 +32,7 @@ void main(string[] args)
 
 module axiom;
 import std.stdio, std.file, std.algorithm, std.string, std.conv;
-public import structer, pars, lex, ast, tokena, ttoken;
+public import structer, pars, lex, ast, tokena;
 import cbased;
 string[string] map_str;
 string[string] func_table; 
@@ -42,35 +42,36 @@ public void interp(Node[] nodes, int mode)
 	{
 		if (auto key = cast(DefineKeyWord)io)
 		{
-			if (key.type == "string" && key.oprator == 1)
+			if (key.type == "string")
 			{
 				map_str[key.name] = key.value.replace("\"", "");
 				//writeln(map_str[key.name]);
-			} else if (key.type == "int" && key.oprator == 1)
+			} else if (key.type == "int")
 			{
 				intmap[key.name] = to!int(key.value);
-			} else if (key.type == "float" && key.oprator == 1)
+			} else if (key.type == "float")
 			{
 				floatmap[key.name] = to!float(key.value);
 				//writeln(floatmap);
-			} else if (key.type == "double" && key.oprator == 1)
+			} else if (key.type == "double")
 			{
 				doublemap[key.name] = to!double(key.value);
-			} else if (key.type == "long" && key.oprator == 1)
+			} else if (key.type == "long")
 			{
 				longmap[key.name] = to!long(key.value);
-			} else if (key.type == "short" && key.oprator == 1)
+			} else if (key.type == "short")
 			{
 				shortmap[key.name] = to!short(key.value);
-			} else if (key.type == "char" && key.oprator == 1)
+			} else if (key.type == "char")
 			{
 				charmap[key.name] = to!char(key.value);
 			}
 		} else if (auto key = cast(FuncCall)io)
 		{
-			if (key.name == "write")
+			if (key.name == "_write")
 			{
-				if (key.arguments.startsWith("\"") && key.arguments.endsWith("\"")){
+				writeln(key.arguments);
+				if ((!key.arguments.startsWith("@"))){
 					auto ja = key.arguments.replace("\\n", "\n");
 					write(ja.replace("\"", ""));
 				} else {
@@ -101,14 +102,16 @@ public void interp(Node[] nodes, int mode)
 				}
 			}
 		} else if (auto key = cast(DefineKeyWordFunc)io ){
-			//writeln(key);
+			writeln(key);
 			{
-				//writeln(key.type);
+				writeln(key.type);
+				writeln(key.func.name);
+				writeln(key.func.arguments);
 			}
-			if (key.type == "string" && key.oprator == 1)
+			if (key.type == "string")
 			{
 				if (mode) writeln("Relized as string and = oprator equal statement.");
-				if(key.func.name == "getInput")
+				if(key.func.name == "_getInput")
 				{
 					if (mode) writeln(key.func.arguments);
 					if (key.func.arguments.startsWith("this")){
@@ -119,7 +122,7 @@ public void interp(Node[] nodes, int mode)
 					} else if (key.func.arguments == "")
 					{
 						map_str[key.name] = readln();
-					} else if (key.func.arguments.indexOf("-v:") != -1 || key.func.arguments.indexOf("--value:") != -1){
+					} else if (key.func.arguments.indexOf("@") != -1){
 						write(map_str[key.func.arguments].replace("\\n", "\n"));
 						map_str[key.name] = readln();
 					} else {
@@ -128,7 +131,7 @@ public void interp(Node[] nodes, int mode)
 						write(p);
 						map_str[key.name] = readln();
 					}
-				} else if (key.func.name == "readFile")
+				} else if (key.func.name == "_readFile")
 				{
 					if (exists(key.func.arguments.replace("\"", "")))
 					{
@@ -137,7 +140,7 @@ public void interp(Node[] nodes, int mode)
 						if (key.func.arguments in map_str)
 						{
 							map_str[key.name] = readText(map_str[key.func.arguments]);
-						} else writeln("Axiom: file dosent exists.");
+						} else writeln("error: file dosent exists.");
 					}
 				}
 			} else if (key.type == "double"){

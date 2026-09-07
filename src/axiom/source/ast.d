@@ -14,14 +14,12 @@ class DefineKeyWord : Node {
 	string gen;
 	string type;
 	string name;
-	int oprator;
 	string value;
-	this(string gen, string type, string name, int oprator, string value)
+	this(string gen, string type, string name, string value)
 	{
 		this.gen = gen;
 		this.name = name;
 		this.type = type;
-		this.oprator = oprator;
 		this.value = value;
 	}
 }
@@ -62,14 +60,12 @@ class DefineKeyWordFunc : Node {
 	string keyword;
 	string type;
 	string name;
-	int oprator;
 	FuncCall func;
-	this(string keyword, string type, string name, int oprator, FuncCall func)
+	this(string keyword, string type, string name, FuncCall func)
 	{
 		this.name = name;
 		this.type = type;
 		this.name = name;
-		this.oprator = oprator;
 		this.func = func;
 	}
 }

@@ -12,15 +12,19 @@ string[] Tokenlz(string line)
 		if (a == '"')
 		{
 			inString = !inString;
-			curent ~= a; 
+			if (inString == false){
+				result ~= curent;
+				curent ~= a;
+			}
+			curent ~= a;
+			continue;
 		} else if (inString == false && a == '(')
 		{
 			inParan = true;
-			curent ~= a;
+			continue;
 		} else if (inString == false && inParan == true && a == ')')
 		{
 			inParan = false;
-			curent ~= a;
 			result ~= curent;
 			curent = "";
 			continue;
@@ -32,9 +36,11 @@ string[] Tokenlz(string line)
 			{
 				result ~= curent;
 				curent = "";
+				continue;
 			}
 		} else {
 			curent ~= a;
+			continue;
 		}
 	}
 	if (curent.length > 0) result ~= curent;
