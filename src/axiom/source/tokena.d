@@ -9,6 +9,7 @@ string[] Tokenlz(string line)
 	bool inParan = false;
 	foreach(char a; line)
 	{
+		write(a);
 		if (a == '"')
 		{
 			inString = !inString;

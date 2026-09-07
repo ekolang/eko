@@ -72,15 +72,9 @@ class DefineKeyWordFunc : Node {
 
 
 class IfState : Node {
-	Node left;
-	string opr;
-	Node right;
-	Node boday;
-	this(Node left, string opr, Node right, Node boday)
+	Node[] bodya;
+	this(Node[] bodya)
 	{
-		this.left = left;
-		this.opr = opr;
-		this.right = right;
-		this.boday = boday;
+		this.bodya = bodya;
 	}
 }

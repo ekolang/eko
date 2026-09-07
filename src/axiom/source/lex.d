@@ -7,8 +7,9 @@ import std.algorithm;
 import ast, pars;
 public string[] funclist = ["getInput", "readFile", "write"];
 BlockType[] iao;
-
+BlockIf[] ifs;
 bool insidef = false;
+
 Tokens[] lexer(string lineo)
 {
 	
@@ -16,14 +17,63 @@ Tokens[] lexer(string lineo)
 	string[] tk = Tokenlz(lineo);
 	bool funcag = false;
 	string lastfunc;
+	bool if_ = false;
+	bool kl = false;
+	Tokens[] arguments;
+	string ag;
+	Node[] body_of_if;
 	foreach (tok; tk)
 	{
+		{
+			writeln(kl);
+			writeln(if_);
+			writeln(ag);
+			writeln(body_of_if);
+		}
+		if (ag.indexOf(tok) != -1){
+			continue;
+		}
 		if (funcag){
 			iao ~= BlockType(lastfunc, tok.replace("\"", ""));
 			result ~= Tokens(Token.Func, lastfunc);
 			lastfunc = "";
 			funcag = false;
 			continue;
+		} else if (if_){
+			writeln("BEFORE:");
+    writeln("if_ = ", if_);
+    writeln("kl = ", kl);
+    writeln("tok = ", tok);
+
+    arguments ~= lexer(tok);
+    ag = tok;
+    if_ = false;
+    kl = true;
+
+    writeln("AFTER:");
+    writeln("if_ = ", if_);
+    writeln("kl = ", kl);
+    writeln("ag = ", ag);
+
+    continue;
+		} else if (kl){
+			if (tok == "end")
+			{
+				ifs ~= BlockIf(ag,arguments, body_of_if);
+				arguments = [];
+				kl = false;
+				body_of_if = [];
+				result ~= Tokens(Token.BrNeedFunc, ag);
+				ag = "";
+				continue;
+			} else {
+				writeln(body_of_if);
+				writeln(tok);
+				writeln(lexer(tok));
+				if(tok == "") continue;
+				body_of_if ~= parser(lexer(tok));
+				continue;
+			}
 		} else if (tok == "generate" || tok == "gen")
 		{
 			result ~= Tokens(Token.KeyWord, tok);
@@ -43,9 +93,13 @@ Tokens[] lexer(string lineo)
 			continue;
 		} else if(tok.startsWith("\"") && tok.endsWith("\"")){
 			result ~= Tokens(Token.Value, tok.replace("\"", ""));
+		} else if(tok == "if"){
+			if_ = true;
+			continue;
 		}
 		
 	}
-	
+	writeln(result);
+	writeln(tk);
 	return result;
 }

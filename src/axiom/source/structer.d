@@ -21,6 +21,12 @@ struct BlockType
 	string funcname;
 	string argumnets;
 }
+struct BlockIf
+{
+	string pical;
+	Tokens[] args;
+	Node[] bod;
+}
 public int[string] intmap;
 public float[string] floatmap;
 public bool[string] boolmap;
