@@ -1,3 +1,4 @@
-if (12 > 13)
+if (13 > 12)
 _write "Helloooo"
+_write "Bye :)"
 end

@@ -38,7 +38,7 @@ Node[] parser(Tokens[] tokens){
 		{
 			if (bk.pical == tokens[0].valu)
 			{
-				if (bk.args[0].type == Token.Value && bk.args[1].type == Token.Oprators && bk.args[2].type == Token.Value)
+				if (bk.args.length >= 3 && bk.args[0].type == Token.Value && bk.args[1].type == Token.Oprators && bk.args[2].type == Token.Value)
 				{
 					try {
 						int left = to!int(bk.args[0].valu);
@@ -67,5 +67,6 @@ Node[] parser(Tokens[] tokens){
 			}
 		}
 	}
+	writeln(ifs);
 	return result;
 }

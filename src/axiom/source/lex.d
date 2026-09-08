@@ -4,11 +4,14 @@ import structer;
 import std.regex;
 import std.string, tokena;
 import std.algorithm;
-import ast, pars;
+import ast, pars, simplelex;
 public string[] funclist = ["getInput", "readFile", "write"];
 BlockType[] iao;
 BlockIf[] ifs;
 bool kl = false;
+string ag;
+Node[] body_of_if;
+Tokens[] arguments;
 Tokens[] lexer(string lineo)
 {
 	
@@ -18,15 +21,13 @@ Tokens[] lexer(string lineo)
 	string lastfunc;
 	bool if_ = false;
 	//bool kl;
-	Tokens[] arguments;
-	string ag;
-	Node[] body_of_if;
+	bool ini = true;
 	foreach (tok; tk)
 	{
 		{
 			writeln(kl);
 			writeln(if_);
-			writeln(ag);
+			writeln("AG: " ~ ag);
 			writeln(body_of_if);
 		}
 		if (ag.indexOf(tok) != -1){
@@ -39,27 +40,27 @@ Tokens[] lexer(string lineo)
 			funcag = false;
 			continue;
 		} else if (if_){
-                        arguments ~= lexer(tok);
-                        ag = tok;
-                        if_ = false;
-                        kl = true;
+            arguments ~= slexer(tok);
+            ag = tok;
+			writeln("TOK = " ~ tok);
+            if_ = false;
+            kl = true;
 			continue;
-		} else if (kl){
+		} else if (kl && ini){
 			if (tok == "end")
 			{
-				ifs ~= BlockIf(ag,arguments, body_of_if);
+				ifs ~= BlockIf(ag, arguments, body_of_if);
 				arguments = [];
 				kl = false;
 				body_of_if = [];
 				result ~= Tokens(Token.BrNeedFunc, ag);
 				ag = "";
+				ini = false;
 				continue;
 			} else {
-				writeln(body_of_if);
-				writeln(tok);
-				writeln(lexer(tok));
+				ini = false;
 				if(tok == "") continue;
-				body_of_if ~= parser(lexer(lineo));
+				body_of_if ~= parser(slexer(lineo));
 				continue;
 			}
 		} else if (tok == "generate" || tok == "gen")

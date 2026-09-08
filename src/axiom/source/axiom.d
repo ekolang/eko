@@ -167,6 +167,9 @@ public void interp(Node[] nodes, int mode)
 					}
 				} 
 			}
+		} else if (auto key = cast(IfState)io)
+		{
+			interp(key.bodya, 0);
 		}
 	}
 }
