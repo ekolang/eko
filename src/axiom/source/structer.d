@@ -10,7 +10,8 @@ enum Token {
 	Func,
 	BrNeedFunc,
 	Br1,
-	Br2
+	Br2,
+	BrInside
 }
 struct Tokens {
 	Token type;

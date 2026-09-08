@@ -7,6 +7,7 @@ string[] Tokenlz(string line)
 	string curent;
 	bool inString = false;
 	bool inParan = false;
+	bool inBr = false;
 	foreach(char a; line)
 	{
 		//write(a);
@@ -17,6 +18,15 @@ string[] Tokenlz(string line)
 				result ~= curent;
 				curent ~= a;
 			}
+			curent ~= a;
+			continue;
+		} else if (a == '}' && inBr && inString){
+			curent ~= a;
+			result ~= curent;
+			curent = "";
+			inBr = false;
+			continue;
+	 	} else if (inBr && inString){
 			curent ~= a;
 			continue;
 		} else if (inString == false && a == '(')
@@ -39,6 +49,12 @@ string[] Tokenlz(string line)
 				curent = "";
 				continue;
 			}
+		} else if(a == '{' && inString){
+			inBr = true;
+			result ~= curent;
+			curent = "";
+			curent ~= a;
+			continue;
 		} else {
 			curent ~= a;
 			continue;

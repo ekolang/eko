@@ -1,3 +1,1 @@
-_mainWindow "parsia"
-_button ("Click" "parsia")
-_loopWindow "parsia"
+_write "{.RED} Hello"

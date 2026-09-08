@@ -75,9 +75,29 @@ public void interp(Node[] nodes, int mode)
 			if (key.name == "_write")
 			{
 				//writeln(key.arguments);
-				if ((!key.arguments.startsWith("@"))){
+				if ((!key.arguments.startsWith("@"))){ // if it was text : _write "Hello world!"
 					auto ja = key.arguments.replace("\\n", "\n");
-					write(ja.replace("\"", ""));
+					Tokens[] args;
+					if (ja.indexOf("{") != -1) args = lexer(key.arguments);
+					foreach(poa; args)
+					{
+						if (poa.type == Token.BrInside)
+						{
+							if (poa.valu.indexOf("@") != -1)
+							{
+								write(map_str[poa.valu]);
+							} else if (poa.valu == ".RED")
+							{
+								write("\033[31m");
+							} else if (poa.valu == ".RESET")
+							{
+								write("\033[0m");
+							} else {
+								write(poa.valu.replace("\\n", "\n"));
+							}
+						}
+					}
+					//write(ja.replace("\"", ""));
 				} else {
 					if (key.arguments in map_str)
 					{

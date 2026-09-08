@@ -17,6 +17,7 @@ Tokens[] lexer(string lineo)
 	
 	Tokens[] result;
 	string[] tk = Tokenlz(lineo);
+	writeln(tk);
 	bool funcag = false;
 	string lastfunc;
 	bool if_ = false;
@@ -85,12 +86,14 @@ Tokens[] lexer(string lineo)
 		} else if(tok == "if"){
 			if_ = true;
 			continue;
+		} else if(tok.startsWith("{") && tok.endsWith("}")){
+			result ~= Tokens(Token.BrNeedFunc, tok);
 		} else {
 			result ~= Tokens(Token.Value, tok);
 		}
 		
 	}
-	//writeln(result);
+	writeln(result);
 	//writeln(tk);
 	return result;
 }
