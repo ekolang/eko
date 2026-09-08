@@ -34,8 +34,12 @@ module axiom;
 import std.stdio, std.file, std.algorithm, std.string, std.conv;
 public import structer, pars, lex, ast, tokena;
 import cbased;
+import arsd.minigui;
 string[string] map_str;
 string[string] func_table; 
+MainWindow[string] gwin;
+Button[string] gbtn;
+import error;
 public void interp(Node[] nodes, int mode)
 {
 	foreach(io; nodes)
@@ -70,7 +74,7 @@ public void interp(Node[] nodes, int mode)
 		{
 			if (key.name == "_write")
 			{
-				writeln(key.arguments);
+				//writeln(key.arguments);
 				if ((!key.arguments.startsWith("@"))){
 					auto ja = key.arguments.replace("\\n", "\n");
 					write(ja.replace("\"", ""));
@@ -100,14 +104,27 @@ public void interp(Node[] nodes, int mode)
 						}
 					}
 				}
+			} else if (key.name == "_mainWindow")
+			{
+				gwin[key.arguments] = new MainWindow(key.arguments.replace("\"", ""));
+			} else if (key.name == "_button")
+			{
+				// it have 2 arguments we must call tokena to get them
+				writeln(key.arguments);
+				string[] argsa = Tokenlz(key.arguments);
+				writeln(argsa);
+				if (argsa.length > 1) gbtn[argsa[0]] = new Button(argsa[0], gwin[argsa[1]]);
+				else _error("`_button` requires 2 arguments.");
+			} else if (key.name == "_loopWindow")
+			{
+				if (key.arguments in gwin)
+				{
+					gwin[key.arguments].loop();
+				} else _error("`_loopWindow` The entered variable name for window does not exist.");
 			}
 		} else if (auto key = cast(DefineKeyWordFunc)io ){
-			writeln(key);
-			{
-				writeln(key.type);
-				writeln(key.func.name);
-				writeln(key.func.arguments);
-			}
+			//writeln(key);
+			
 			if (key.type == "string")
 			{
 				if (mode) writeln("Relized as string and = oprator equal statement.");

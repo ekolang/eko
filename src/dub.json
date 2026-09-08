@@ -12,12 +12,13 @@
 	],
 	"description": "A minimal D application.",
 	"dependencies": {
-		"handy-httpd": "~>8.7.0",
-		"marschiert": {
-			"path": "./runtime/"
-		},
 		"axiom": {
 			"path": "./axiom/"
+		},
+		"handy-httpd": "~>8.7.0",
+		"arsd-official:minigui": "~>12.1.2",
+		"marschiert": {
+			"path": "./runtime/"
 		}
 	},
 	"importPaths": [

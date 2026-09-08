@@ -1,4 +1,3 @@
-if (13 > 12)
-_write "Helloooo"
-_write "Bye :)"
-end
+_mainWindow "parsia"
+_button ("Click" "parsia")
+_loopWindow "parsia"

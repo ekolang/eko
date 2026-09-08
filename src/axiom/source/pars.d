@@ -7,7 +7,7 @@ import std.conv;
 
 Node[] parser(Tokens[] tokens){
 	Node[] result;
-	writeln(iao);
+	//writeln(iao);
 	if (tokens.length > 0 && tokens[0].type == Token.KeyWord && tokens[1].type == Token.Type && tokens[2].type == Token.Name)
 	{
 		if (tokens[3].type == Token.Func){
@@ -67,6 +67,6 @@ Node[] parser(Tokens[] tokens){
 			}
 		}
 	}
-	writeln(ifs);
+	//writeln(ifs);
 	return result;
 }

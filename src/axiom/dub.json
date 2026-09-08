@@ -1,11 +1,16 @@
 {
-	"description": "ASTSupport lib for eko.",
-	"license": "GPL-3.0-only",
 	"authors": [
 		"Pouya Mohammadi"
 	],
+	"license": "GPL-3.0-only",
 	"copyright": "Copyright © 2026, Pouya Mohammadi",
 	"name": "axiom",
-	"targetType": "library",
-	    "libs": ["cbased"]
+	"libs": [
+		"cbased"
+	],
+	"description": "ASTSupport lib for eko.",
+	"dependencies": {
+		"arsd-official:minigui": "~>12.1.2"
+	},
+	"targetType": "library"
 }

@@ -12,10 +12,10 @@ void astSupportRun(string filepath, int mode)
         foreach(li; fileline)
         {
             Tokens[] tokenlist = lexer(li);
-			writeln(tokenlist);
+			//writeln(tokenlist);
 			Node[] parser_result = parser(tokenlist);
-			writeln(parser_result);
-            if (mode == 1) writeln(parser_result);
+			//writeln(parser_result);
+            //if (mode == 1) writeln(parser_result);
 			interp(parser_result, 0);
         }
     } else prinPanic(kodes._file_faild, "eko ast-mode");

@@ -24,12 +24,12 @@ Tokens[] lexer(string lineo)
 	bool ini = true;
 	foreach (tok; tk)
 	{
-		{
+		/*{
 			writeln(kl);
 			writeln(if_);
 			writeln("AG: " ~ ag);
 			writeln(body_of_if);
-		}
+		}*/
 		if (ag.indexOf(tok) != -1){
 			continue;
 		}
@@ -42,7 +42,7 @@ Tokens[] lexer(string lineo)
 		} else if (if_){
             arguments ~= slexer(tok);
             ag = tok;
-			writeln("TOK = " ~ tok);
+			//writeln("TOK = " ~ tok);
             if_ = false;
             kl = true;
 			continue;
@@ -85,10 +85,12 @@ Tokens[] lexer(string lineo)
 		} else if(tok == "if"){
 			if_ = true;
 			continue;
+		} else {
+			result ~= Tokens(Token.Value, tok);
 		}
 		
 	}
-	writeln(result);
-	writeln(tk);
+	//writeln(result);
+	//writeln(tk);
 	return result;
 }
