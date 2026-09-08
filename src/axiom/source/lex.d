@@ -8,8 +8,7 @@ import ast, pars;
 public string[] funclist = ["getInput", "readFile", "write"];
 BlockType[] iao;
 BlockIf[] ifs;
-bool insidef = false;
-
+bool kl = false;
 Tokens[] lexer(string lineo)
 {
 	
@@ -18,7 +17,7 @@ Tokens[] lexer(string lineo)
 	bool funcag = false;
 	string lastfunc;
 	bool if_ = false;
-	bool kl = false;
+	//bool kl;
 	Tokens[] arguments;
 	string ag;
 	Node[] body_of_if;
@@ -40,22 +39,11 @@ Tokens[] lexer(string lineo)
 			funcag = false;
 			continue;
 		} else if (if_){
-			writeln("BEFORE:");
-    writeln("if_ = ", if_);
-    writeln("kl = ", kl);
-    writeln("tok = ", tok);
-
-    arguments ~= lexer(tok);
-    ag = tok;
-    if_ = false;
-    kl = true;
-
-    writeln("AFTER:");
-    writeln("if_ = ", if_);
-    writeln("kl = ", kl);
-    writeln("ag = ", ag);
-
-    continue;
+                        arguments ~= lexer(tok);
+                        ag = tok;
+                        if_ = false;
+                        kl = true;
+			continue;
 		} else if (kl){
 			if (tok == "end")
 			{
@@ -71,7 +59,7 @@ Tokens[] lexer(string lineo)
 				writeln(tok);
 				writeln(lexer(tok));
 				if(tok == "") continue;
-				body_of_if ~= parser(lexer(tok));
+				body_of_if ~= parser(lexer(lineo));
 				continue;
 			}
 		} else if (tok == "generate" || tok == "gen")

@@ -42,7 +42,7 @@ Node[] parser(Tokens[] tokens){
 				{
 					try {
 						int left = to!int(bk.args[0].valu);
-						int right = to!int(bk.args[1].valu);
+						int right = to!int(bk.args[2].valu);
 						if (bk.args[1].valu == "==")
 						{
 							if (left == right) resulta = true;
