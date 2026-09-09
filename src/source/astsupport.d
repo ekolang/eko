@@ -16,6 +16,10 @@ void astSupportRun(string filepath, int mode)
 			Node[] parser_result = parser(tokenlist);
 			//writeln(parser_result);
             //if (mode == 1) writeln(parser_result);
+            map_str["@RED"] = "\033[31m";
+            map_str["@RESET"] = "\033[0m";
+            map_str["@BOLD"] = "\033[1m";
+            map_str["@GREEN"] = "\033[32m";
 			interp(parser_result, 0);
         }
     } else prinPanic(kodes._file_faild, "eko ast-mode");

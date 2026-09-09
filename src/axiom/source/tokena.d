@@ -13,11 +13,14 @@ string[] Tokenlz(string line)
 		//write(a);
 		if (a == '"' && (inParan == false))
 		{
-			inString = !inString;
 			if (inString == false){
 				result ~= curent;
+				curent = "";
 				curent ~= a;
+				inString = !inString;
+				continue;
 			}
+			inString = !inString;
 			curent ~= a;
 			continue;
 		} else if (a == '}' && inBr && inString){

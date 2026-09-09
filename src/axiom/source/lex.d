@@ -17,7 +17,7 @@ Tokens[] lexer(string lineo)
 	
 	Tokens[] result;
 	string[] tk = Tokenlz(lineo);
-	writeln(tk);
+	//writeln(tk);
 	bool funcag = false;
 	string lastfunc;
 	bool if_ = false;
@@ -34,8 +34,8 @@ Tokens[] lexer(string lineo)
 		if (ag.indexOf(tok) != -1){
 			continue;
 		}
-		if (funcag){
-			iao ~= BlockType(lastfunc, tok.replace("\"", ""));
+		if (funcag && !(tok == "")){
+			iao ~= BlockType(lastfunc, tok);
 			result ~= Tokens(Token.Func, lastfunc);
 			lastfunc = "";
 			funcag = false;
@@ -88,12 +88,15 @@ Tokens[] lexer(string lineo)
 			continue;
 		} else if(tok.startsWith("{") && tok.endsWith("}")){
 			result ~= Tokens(Token.BrNeedFunc, tok);
+		} else if (tok == "") {
+			continue;
 		} else {
 			result ~= Tokens(Token.Value, tok);
 		}
 		
 	}
-	writeln(result);
+	//writeln(result);
 	//writeln(tk);
+	//writeln(iao);
 	return result;
 }

@@ -16,24 +16,24 @@ string aj;
 string eko_ver = "0.0.4";
 void prHelpMenu()
 {
-	writeln("\033[1mEko (V0.0.4) https://github.com/ekolang/eko");
+	writeln("\033[1mEko (V0.0.5) https://github.com/ekolang/eko");
 		writeln("	Usage: ./eko [flag] [options]");
-		writeln("\nFlags:\n	-e | --enter: Importing a Eko program");
-		writeln("	-ge| --generate-exe: Generate an executable binary as a standalone application.");
+        writeln("\nFlags:\n	-e | --enter: Importing a Eko program");
+		//writeln("	-ge| --generate-exe: Generate an executable binary as a standalone application.");
 		writeln("	-n | --normal: Run the interpreter in normal mode (without interpretation messages)");
 		writeln("	-d | --debug: Run the interpreter in debug mode and display messages during the interpretation process.");
 		//writeln("	-x | --xdoc: Offline Documents in localhost.");
 		//writeln("	-v | --version: show version of EkoInterperter.");
 		//writeln("	-h | --help: show current menu.");
-		 writeln("	-spe | --sboxprinterror: Show errors of SboX.");
-		writeln("	-adebug | --asm-debug: Print result of EkoC to NASM.");
-		writeln("	-cdebug | --csc-debug: Printf Eko to EkoC result.");
+		// writeln("	-spe | --sboxprinterror: Show errors of SboX.");
+		//writeln("	-adebug | --asm-debug: Print result of EkoC to NASM.");
+		//writeln("	-cdebug | --csc-debug: Printf Eko to EkoC result.");
 		writeln("	-td | --term-debugger: run terminal-based Debugger.");
 		writeln("	-ast | --abstract-syntax-tree: Use AST to run your program. (BETA)");
 		writeln("Versions:");
 		writeln("	marschiert(runtime librray): " ~ _version);
-		writeln("	Eko: 0.0.4");
-		writeln("\nExample: ./eko -e hi.eko-n\033[0m");
+		writeln("	Eko: 0.0.5");
+		writeln("\nExample: ./eko -e hi.eko -n\033[0m");
 }
 void main(string[] args)
 {

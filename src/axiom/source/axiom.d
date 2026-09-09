@@ -34,7 +34,7 @@ module axiom;
 import std.stdio, std.file, std.algorithm, std.string, std.conv;
 public import structer, pars, lex, ast, tokena;
 import cbased;
-import arsd.minigui;
+import arsd.minigui, safeargs;
 string[string] map_str;
 string[string] func_table; 
 MainWindow[string] gwin;
@@ -48,8 +48,16 @@ public void interp(Node[] nodes, int mode)
 		{
 			if (key.type == "string")
 			{
-				map_str[key.name] = key.value.replace("\"", "");
+				string[] a1 = Tokenlz(key.value);
+				string[] a2 = safe_args(map_str, a1);
+				foreach(op; a2)
+				{
+					if (key.name in map_str) map_str[key.name] = map_str[key.name] ~ op.replace("\"", "");
+					else map_str[key.name] = op.replace("\"", "");
+				}
+				//map_str[key.name] = key.value.replace("\"", "");
 				//writeln(map_str[key.name]);
+				//writeln(key.name);
 			} else if (key.type == "int")
 			{
 				intmap[key.name] = to!int(key.value);
@@ -74,73 +82,68 @@ public void interp(Node[] nodes, int mode)
 		{
 			if (key.name == "_write")
 			{
+				string[] lp = key.arguments.split("+");
 				//writeln(key.arguments);
-				if ((!key.arguments.startsWith("@"))){ // if it was text : _write "Hello world!"
-					auto ja = key.arguments.replace("\\n", "\n");
-					Tokens[] args;
-					if (ja.indexOf("{") != -1) args = lexer(key.arguments);
-					foreach(poa; args)
-					{
-						if (poa.type == Token.BrInside)
-						{
-							if (poa.valu.indexOf("@") != -1)
-							{
-								write(map_str[poa.valu]);
-							} else if (poa.valu == ".RED")
-							{
-								write("\033[31m");
-							} else if (poa.valu == ".RESET")
-							{
-								write("\033[0m");
-							} else {
-								write(poa.valu.replace("\\n", "\n"));
-							}
-						}
-					}
-					//write(ja.replace("\"", ""));
+				foreach(lp1p; lp){
+					string lp1 = lp1p.strip();
+				if ((!lp1.startsWith("@"))){ // if it was text : _write "Hello world!"
+					auto ja = lp1.replace("\\n", "\n");
+					write(ja.replace("\"", ""));
 				} else {
-					if (key.arguments in map_str)
+					if (lp1 in map_str)
 					{
-						write(map_str[key.arguments].replace("\\n", "\n"));
+						write(map_str[lp1].replace("\\n", "\n"));
 					} else {
-						if (key.arguments in intmap)
+						if (lp1 in intmap)
 						{
-							write(intmap[key.arguments]);
-						} else if (key.arguments in charmap)
+							write(intmap[lp1]);
+						} else if (lp1 in charmap)
 						{
-							write(charmap[key.arguments]);
-						} else if (key.arguments in shortmap)
+							write(charmap[lp1]);
+						} else if (lp1 in shortmap)
 						{
-							write(shortmap[key.arguments]);
-						} else if (key.arguments in longmap)
+							write(shortmap[lp1]);
+						} else if (lp1 in longmap)
 						{
-							write(longmap[key.arguments]);
-						} else if (key.arguments in floatmap)
+							write(longmap[lp1]);
+						} else if (lp1 in floatmap)
 						{
-							write(floatmap[key.arguments]);
-						} else if (key.arguments in doublemap)
+							write(floatmap[lp1]);
+						} else if (lp1 in doublemap)
 						{
-							write(doublemap[key.arguments]);
+							write(doublemap[lp1]);
+						} else {
+							_error("\"\033[32m\033[1m" ~ lp1.replace("@", "") ~ "\033[0m\"" ~ " does not exist in any of the data types or is undefined.");
 						}
 					}
 				}
+			}
 			} else if (key.name == "_mainWindow")
 			{
-				gwin[key.arguments] = new MainWindow(key.arguments.replace("\"", ""));
+				gwin[key.arguments.replace("\"", "")] = new MainWindow(key.arguments.replace("\"", ""));
 			} else if (key.name == "_button")
 			{
 				// it have 2 arguments we must call tokena to get them
-				writeln(key.arguments);
-				string[] argsa = Tokenlz(key.arguments);
-				writeln(argsa);
-				if (argsa.length > 1) gbtn[argsa[0]] = new Button(argsa[0], gwin[argsa[1]]);
+				//writeln(key.arguments);
+				string[] argsa1 = Tokenlz(key.arguments);
+				//do it all time for safty
+				string[] argsa = safe_args(map_str, argsa1);
+				//writeln(argsa);
+				
+				if (argsa.length >= 2) gbtn[argsa[0]] = new Button(argsa[0], gwin[argsa[1].replace("\"", "")]);
 				else _error("`_button` requires 2 arguments.");
 			} else if (key.name == "_loopWindow")
 			{
-				if (key.arguments in gwin)
+				if (key.arguments.replace("\"", "") in gwin)
 				{
-					gwin[key.arguments].loop();
+					gwin[key.arguments.replace("\"", "")].loop();
 				} else _error("`_loopWindow` The entered variable name for window does not exist.");
+			} else if (key.name == "_debugPrintAllString")
+			{
+				if (!(key.arguments == "NULL"))
+				{
+					_error("The input for this function\033[1m\033[34m _debugPrintAllString \033[0m must be null (empty).");
+				}
 			}
 		} else if (auto key = cast(DefineKeyWordFunc)io ){
 			//writeln(key);
@@ -170,6 +173,7 @@ public void interp(Node[] nodes, int mode)
 					}
 				} else if (key.func.name == "_readFile")
 				{
+					//writeln(key.func.arguments);
 					if (exists(key.func.arguments.replace("\"", "")))
 					{
 						map_str[key.name] = readText(key.func.arguments.replace("\"", ""));
@@ -177,7 +181,7 @@ public void interp(Node[] nodes, int mode)
 						if (key.func.arguments in map_str)
 						{
 							map_str[key.name] = readText(map_str[key.func.arguments]);
-						} else writeln("error: file dosent exists.");
+						} else _error("File \033[1m\033[34m" ~ key.func.arguments ~ "\033[0m Not exists.");
 					}
 				}
 			} else if (key.type == "double"){
