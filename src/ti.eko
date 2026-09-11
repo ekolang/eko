@@ -1,5 +1,13 @@
-if ("Hello" == "Hello")
-    _write "kakkello\n"
-    _write "Bye\n"
+gen string @userinput _getInput "Type h for help > "
+_write @userinput
+if (@userinput == "h")
+    _write "Help Menu\n"
+    _write "e for exit form installer\n"
+    _write "g for start gui\n"
+    _write (@BOLD + @RED + "note that this menu just show one time, for choose something again, run this installer again.\n")
 end
-_write "L\n"
+
+if (@userinput == "e")
+    _write "Existing form installer\n"
+    _abort NULL
+end

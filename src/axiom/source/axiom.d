@@ -35,7 +35,7 @@ import std.stdio, std.file, std.algorithm, std.string, std.conv;
 public import structer, pars, lex, ast, tokena;
 import cbased;
 import arsd.minigui, safeargs;
-string[string] map_str;
+//string[string] map_str;
 string[string] func_table; 
 MainWindow[string] gwin;
 Button[string] gbtn;
@@ -176,6 +176,12 @@ public void interp(Node[] nodes, int mode)
 						_error("`_label`: " ~ argsa[1] ~" The specified text position does not exist.");
 					}
 				}
+			} else if (key.name == "_abort")
+			{
+				if (key.arguments != "NULL")
+				{
+					_error("The input for this function\033[1m\033[34m _debugPrintAllString \033[0m must be null (empty).");
+				} else _abort();
 			}
 		} else if (auto key = cast(DefineKeyWordFunc)io ){
 			//writeln(key);

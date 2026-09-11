@@ -3,7 +3,7 @@ import std.stdio, std.range;
 import structer, ast;
 import lex, axiom, std.string;
 import std.ascii : isDigit;
-import std.conv, error;
+import std.conv, error, safeargs;
 
 Node[] parser(Tokens[] tokens){
 	Node[] result;
@@ -40,6 +40,12 @@ Node[] parser(Tokens[] tokens){
 		//writeln(ifs);
 		foreach (bk; ifs)
 		{
+			foreach(k, l; bk.args)
+			{
+				string patrik = safe_args_string(map_str, l.valu);
+				bk.args[k].valu = patrik.strip();
+				continue;
+			}
 			//writeln("me: ", bk);
 			if (bk.pical == tokens[0].valu)
 			{
@@ -62,8 +68,10 @@ Node[] parser(Tokens[] tokens){
 							else resulta = false;
 						}
 					} catch(Exception e){
-						string left = bk.args[0].valu;
-						string right = bk.args[2].valu;
+						string left = bk.args[0].valu.replace("\"", "");
+						string right = bk.args[2].valu.replace("\"", "");
+						//writeln("L: " ~ left);
+						//writeln("R:" ~ right);
 						if (bk.args[1].valu == "==")
 						{
 							if (left == right) resulta = true;
@@ -73,6 +81,7 @@ Node[] parser(Tokens[] tokens){
 						}
 					}
 				}
+				//writeln(resulta);
 				if (resulta)
 				{
 					    //writeln("[PARSER] added IfState, body nodes = ", bk.bod.length);

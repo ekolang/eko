@@ -8,6 +8,7 @@ import std.algorithm;
 import ast, pars, lex;
 bool funcaag = false;
 string lastfunca;
+import safeargs;
 Tokens[] slexer(string lineo)
 {
 	
@@ -34,7 +35,7 @@ Tokens[] slexer(string lineo)
 			result ~= Tokens(Token.Type, tok);
 		} else if (tok.startsWith("@"))
 		{
-			result ~= Tokens(Token.Name, tok);
+			result ~= Tokens(Token.Value, tok);
 		} else if (tok == "=" || tok == "==" || tok == ">" || tok == "<")
 		{
 			result ~= Tokens(Token.Oprators, tok);

@@ -59,7 +59,7 @@ Tokens[] lexer(string lineo)
 			funcag = false;
 			continue;
 		} else if (if_){
-            arguments ~= slexer(safe_args_string(map_str, tok));
+            arguments ~= slexer(tok);
             ag = tok;
 			df = true;
 			//writeln("TOK = " ~ tok);
