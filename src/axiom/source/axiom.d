@@ -39,9 +39,11 @@ string[string] map_str;
 string[string] func_table; 
 MainWindow[string] gwin;
 Button[string] gbtn;
+TextLabel[string] glabel;
 import error;
 public void interp(Node[] nodes, int mode)
 {
+	    //writeln("[INTERP] nodes = ", nodes.length);
 	foreach(io; nodes)
 	{
 		if (auto key = cast(DefineKeyWord)io)
@@ -89,6 +91,7 @@ public void interp(Node[] nodes, int mode)
 				if ((!lp1.startsWith("@"))){ // if it was text : _write "Hello world!"
 					auto ja = lp1.replace("\\n", "\n");
 					write(ja.replace("\"", ""));
+					//writeln("\nWRITE CALLED: ", key.name, " ARG = [", key.arguments, "]");
 				} else {
 					if (lp1 in map_str)
 					{
@@ -120,7 +123,14 @@ public void interp(Node[] nodes, int mode)
 			}
 			} else if (key.name == "_mainWindow")
 			{
-				gwin[key.arguments.replace("\"", "")] = new MainWindow(key.arguments.replace("\"", ""));
+				string[] argsa1 = Tokenlz(key.arguments);
+				//do it all time for safty
+				string[] argsa = safe_args(map_str, argsa1);
+				//writeln(argsa);
+				
+				if (argsa.length >= 2){
+					gwin[argsa[0].replace("\"", "")] = new MainWindow(argsa[1].replace("\"", ""));
+				}
 			} else if (key.name == "_button")
 			{
 				// it have 2 arguments we must call tokena to get them
@@ -130,7 +140,7 @@ public void interp(Node[] nodes, int mode)
 				string[] argsa = safe_args(map_str, argsa1);
 				//writeln(argsa);
 				
-				if (argsa.length >= 2) gbtn[argsa[0]] = new Button(argsa[0], gwin[argsa[1].replace("\"", "")]);
+				if (argsa.length >= 2) gbtn[argsa[0]] = new Button(argsa[0].replace("\"", ""), gwin[argsa[1].replace("\"", "")]);
 				else _error("`_button` requires 2 arguments.");
 			} else if (key.name == "_loopWindow")
 			{
@@ -143,6 +153,28 @@ public void interp(Node[] nodes, int mode)
 				if (!(key.arguments == "NULL"))
 				{
 					_error("The input for this function\033[1m\033[34m _debugPrintAllString \033[0m must be null (empty).");
+				}
+			} else if (key.name == "_label")
+			{
+				string[] argsa1 = Tokenlz(key.arguments);
+				//do it all time for safty
+				string[] argsa = safe_args(map_str, argsa1);
+				//writeln(argsa);
+				if (argsa.length >= 3) {
+					//writeln(argsa);
+					if (!(argsa[1].startsWith("\"") && argsa[1].endsWith("\""))) _error("`_label: " ~ map_str["@BOLD"] ~ "Third argument`," ~ map_str["@RESET"] ~" The input must be a string.");
+					else argsa[1] = argsa[1].replace("\"", "");
+					if (argsa[1] == "center"){
+						glabel[argsa[0]] = new TextLabel(argsa[0].replace("\"", ""), TextAlignment.Center, gwin[argsa[2].replace("\"", "")]);
+					} else if (argsa[1] == "left")
+					{
+						glabel[argsa[0]] = new TextLabel(argsa[0].replace("\"", ""), TextAlignment.Left, gwin[argsa[2].replace("\"", "")]);
+					} else if (argsa[1] == "right")
+					{
+						glabel[argsa[0]] = new TextLabel(argsa[0].replace("\"", ""), TextAlignment.Right, gwin[argsa[2].replace("\"", "")]);
+					} else {
+						_error("`_label`: " ~ argsa[1] ~" The specified text position does not exist.");
+					}
 				}
 			}
 		} else if (auto key = cast(DefineKeyWordFunc)io ){

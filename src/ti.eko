@@ -1,4 +1,5 @@
-_write (@RED + "This is red" + @RESET + "\n")
-_write (@GREEN + "This is green" + @RESET + "\n")
-_write (@BOLD + "This is bold" + @RESET + "\n")
-_write (@RED + @BOLD + "This is red and bold" + @RESET + "\n")
+if ("Hello" == "Hello")
+    _write "kakkello\n"
+    _write "Bye\n"
+end
+_write "L\n"

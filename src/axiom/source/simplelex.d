@@ -6,21 +6,25 @@ import std.regex;
 import std.string, tokena;
 import std.algorithm;
 import ast, pars, lex;
-
+bool funcaag = false;
+string lastfunca;
 Tokens[] slexer(string lineo)
 {
 	
 	Tokens[] result;
 	string[] tk = Tokenlz(lineo);
-	bool funcag = false;
-	string lastfunc;
+	
 	foreach (tok; tk)
 	{
-        if (funcag){
-			iao ~= BlockType(lastfunc, tok.replace("\"", ""));
-			result ~= Tokens(Token.Func, lastfunc);
-			lastfunc = "";
-			funcag = false;
+		{
+			//writeln(tok);
+			//writeln("slexer - funcaag: ", funcaag);
+		}
+        if (funcaag && !(tok == "")){
+			iao ~= BlockType(lastfunca, tok.replace("\"", ""));
+			result ~= Tokens(Token.Func, lastfunca);
+			lastfunca = "";
+			funcaag = false;
 			continue;
 		} else if (tok == "generate" || tok == "gen")
 		{
@@ -36,11 +40,13 @@ Tokens[] slexer(string lineo)
 			result ~= Tokens(Token.Oprators, tok);
 		} else if (tok.startsWith("_"))
 		{
-			lastfunc = tok;
-			funcag = true;
+			lastfunca = tok;
+			funcaag = true;
 			continue;
 		} else if(tok.startsWith("\"") && tok.endsWith("\"")){
 			result ~= Tokens(Token.Value, tok.replace("\"", ""));
+		} else if(tok == ""){
+			continue;
 		} else {
             result ~= Tokens(Token.Value, tok);
         }
