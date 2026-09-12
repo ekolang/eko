@@ -34,13 +34,18 @@ module axiom;
 import std.stdio, std.file, std.algorithm, std.string, std.conv;
 public import structer, pars, lex, ast, tokena;
 import cbased;
-import arsd.minigui, safeargs;
+import arsd.minigui, safeargs, core.thread, core.time;
 //string[string] map_str;
 string[string] func_table; 
 MainWindow[string] gwin;
 Button[string] gbtn;
 TextLabel[string] glabel;
 import error;
+bool tick = false;
+bool broke = false;
+int time;
+//import std.datetime.stopwatch;
+//auto sw = StopWatch(AutoStart.yes);
 public void interp(Node[] nodes, int mode)
 {
 	    //writeln("[INTERP] nodes = ", nodes.length);
@@ -182,6 +187,21 @@ public void interp(Node[] nodes, int mode)
 				{
 					_error("The input for this function\033[1m\033[34m _debugPrintAllString \033[0m must be null (empty).");
 				} else _abort();
+			} else if (key.name == "_break")
+			{
+				if (key.arguments != "NULL")
+				{
+					_error("The input for this function\033[1m\033[34m _debugPrintAllString \033[0m must be null (empty).");
+				} else broke = true;
+			} else if (key.name == "_time")
+			{
+				try {
+					time = to!int(key.arguments);
+					continue;
+				} catch(Exception e)
+				{
+					_error("Just put int for `_time`");
+				}
 			}
 		} else if (auto key = cast(DefineKeyWordFunc)io ){
 			//writeln(key);
@@ -249,6 +269,22 @@ public void interp(Node[] nodes, int mode)
 		} else if (auto key = cast(IfState)io)
 		{
 			interp(key.bodya, 0);
+		} else if (auto key = cast(DefineDelegate)io)
+		{
+			//writeln("DELEGATE FOUND");
+    		//writeln("EVENT: ", key.event_name);
+    		//writeln("BODY: ", key._body);
+			if (key.event_name == "tick")
+			{
+
+				while(!broke){
+					
+					Thread.sleep(dur!"msecs"(time));
+					interp(key._body, 0);
+					stdout.flush();
+					tick = false;
+				}
+			} else _error("Such an event is not defined.");
 		}
 	}
 }

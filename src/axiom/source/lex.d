@@ -8,14 +8,19 @@ import ast, pars, simplelex, safeargs;
 public string[] funclist = ["getInput", "readFile", "write"];
 BlockType[] iao;
 BlockIf[] ifs;
+BlockDelegates[] _bdelegate; //for saving delegates
 bool kl = false;
 string ag;
 Node[] body_of_if;
+Node[] bod;
 Tokens[] arguments;
 int ip = 0;
+bool dg = false; // for delegate, to discover if we are in delegate or not.
 	bool df = false;
+	bool fk = false; // get body of delegate
 	bool funcag = false;
 	string lastfunc;
+	string dgate_bol;
 	bool if_ = false;
 	//bool kl;
 	bool ini = true;
@@ -26,7 +31,10 @@ Tokens[] lexer(string lineo)
 	string[] tk = Tokenlz(lineo);
 	//writeln(tk);
 	
-	
+	if (fk && !(lineo.strip() == "end")){
+		bod ~= parser(slexer(lineo));
+		//writeln(bod, " l: ", slexer(lineo));
+	}
 	foreach (tok; tk)
 	{
 		/*{
@@ -77,6 +85,7 @@ Tokens[] lexer(string lineo)
 				result ~= Tokens(Token.BrNeedFunc, ag);
 				ag = "";
 				ini = false;
+				
 				continue;
 			} else {
 				if(tok == "") continue;
@@ -92,6 +101,22 @@ Tokens[] lexer(string lineo)
 				//writeln("body of if : ", body_of_if);
 				continue;
 			}
+		} else if (fk){
+			if (tok == "end")
+			{
+				_bdelegate ~= BlockDelegates(dgate_bol, bod);
+				result ~= Tokens(Token.BrNeedFunc, "delegate");
+				fk = false;
+				bod = [];
+				dgate_bol = "";
+
+				continue;
+			} else continue;
+		} else if (dg){
+			fk = true;
+			dgate_bol = tok;
+			dg = false;
+			continue;
 		} else if (tok == "generate" || tok == "gen")
 		{
 			result ~= Tokens(Token.KeyWord, tok);
@@ -116,6 +141,9 @@ Tokens[] lexer(string lineo)
 			continue;
 		} else if(tok.startsWith("{") && tok.endsWith("}")){
 			result ~= Tokens(Token.BrNeedFunc, tok);
+		} else if (tok == "delegate"){
+			dg = true;
+			continue;
 		} else if (tok == "") {
 			continue;
 		} else {

@@ -36,6 +36,12 @@ Node[] parser(Tokens[] tokens){
 		}
 	} else if (tokens.length > 0 && tokens[0].type == Token.BrNeedFunc)
 	{
+		if (tokens[0].valu == "delegate"){
+			foreach (olk; _bdelegate)
+			{
+				result ~= new DefineDelegate(olk.boolen, olk.bodyo);
+			}
+		} else {
 		bool resulta;
 		//writeln(ifs);
 		foreach (bk; ifs)
@@ -76,6 +82,16 @@ Node[] parser(Tokens[] tokens){
 						{
 							if (left == right) resulta = true;
 							else resulta = false;
+						} else if (bk.args[1].valu == ">"){
+							if (left.length > right.length) resulta = true;
+							else resulta = false;
+						} else if (bk.args[1].valu == "<")
+						{
+							if (left.length < right.length) resulta = true;
+							else resulta = false;
+						} else if(bk.args[1].valu == "="){
+							if (left.length == right.length) resulta = true;
+							else resulta = false;
 						} else {
 							_error("Can't use `" ~ bk.args[1].valu ~ "` for this types. (string)");
 						}
@@ -90,7 +106,9 @@ Node[] parser(Tokens[] tokens){
 				}
 			}
 		}
+		}
 	}
 	//writeln(ifs);
+	//writeln(result);
 	return result;
 }

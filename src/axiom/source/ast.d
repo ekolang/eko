@@ -78,3 +78,13 @@ class IfState : Node {
 		this.bodya = bodya;
 	}
 }
+
+class DefineDelegate : Node {
+	string event_name;
+	Node[] _body;
+	this(string event_name, Node[] _body)
+	{
+		this.event_name = event_name;
+		this._body = _body;
+	}
+}

@@ -1,13 +1,8 @@
-gen string @userinput _getInput "Type h for help > "
-_write @userinput
-if (@userinput == "h")
-    _write "Help Menu\n"
-    _write "e for exit form installer\n"
-    _write "g for start gui\n"
-    _write (@BOLD + @RED + "note that this menu just show one time, for choose something again, run this installer again.\n")
-end
-
-if (@userinput == "e")
-    _write "Existing form installer\n"
-    _abort NULL
+gen string @useri _getInput "H for Help > "
+_time 4000
+delegate tick
+    if (@useri == "g")
+        _write "Hello to help"
+    end
+    _break NULL
 end

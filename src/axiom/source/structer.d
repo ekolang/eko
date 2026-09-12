@@ -28,6 +28,11 @@ struct BlockIf
 	Tokens[] args;
 	Node[] bod;
 }
+struct BlockDelegates
+{
+	string boolen;
+	Node[] bodyo;
+}
 public int[string] intmap;
 public float[string] floatmap;
 public bool[string] boolmap;
